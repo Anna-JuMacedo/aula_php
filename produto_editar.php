@@ -2,14 +2,7 @@
 require_once 'conexao.php';
 require_once 'produto.php';
 
-$banco = new BancoDeDados();
-$conexao = $banco->obterConexao();
-
-if (!$conexao) {
-    die("<p class='error'>Erro: Não foi possível conectar ao banco de dados.</p>");
-}
-
-// Verifica se o ID foi passado
+if ($conexao) 
 if (!isset($_GET['id'])) {
     die("<p class='error'>Erro: Produto não especificado.</p>");
 }
@@ -55,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="text" name="nome" id="nome" value="<?php echo htmlspecialchars($dados['nome']); ?>" required><br><br>
 
             <label for="preco">Preço:</label><br>
-            <input type="number" step="0.01" name="preco" id="preco" value="<?php echo htmlspecialchars($dados['preco']); ?>" required><br><br>
+            <input type="number" step="any" name="preco" id="preco" value="<?php echo htmlspecialchars($dados['preco']); ?>" required><br><br>
 
             <input type="submit" value="Salvar Alterações">
         </form>

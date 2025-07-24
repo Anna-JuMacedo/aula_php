@@ -1,4 +1,5 @@
 <?php
+
 class Produto {
     private $conexao;
     private $tabela = "produtos";

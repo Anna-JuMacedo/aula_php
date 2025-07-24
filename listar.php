@@ -14,21 +14,30 @@
     <section>
         <h2>Pessoas</h2>
         <?php
-        require_once 'conexao.php';
-        require_once 'pessoa.php';
-        require_once 'produto.php';
+       require_once 'conexao.php';
 
-        $database = new BancoDeDados();
-        $db = $database->obterConexao();
+       
+       if ($conexao){
+           try {
+               $sql = "SELECT * FROM pessoas";
+               $stmtPessoas = $con->query($sql);
+       
+               if ($stmtPessoas && $stmtPessoas->rowCount() > 0) {
+                   foreach ($stmtPessoas as $pessoa) {
+                       echo "Nome: " . htmlspecialchars($pessoa['nome']) . "<br>";
+                   }
+               } else {
+                   echo "<p>Nenhuma pessoa cadastrada.</p>";
+               }
+       
+           } catch (PDOException $e) {
+               echo "<p class='error'>Erro ao executar a consulta: " . $e->getMessage() . "</p>";
+           }
+       } else {
+           echo "<p class='error'>Erro ao conectar ao banco de dados.</p>";
+       }
 
-        if ($db === null) {
-            die("<p class='error'>Erro: Não foi possível conectar ao banco de dados.</p>");
-        }
-
-        // Listar Pessoas
-        $pessoa = new Pessoa($db);
-        $stmtPessoas = $pessoa->ler();
-
+        $pessoas = new Pessoa($db);
         if ($stmtPessoas->rowCount() > 0) {
             while ($linha = $stmtPessoas->fetch(PDO::FETCH_ASSOC)) {
                 echo "<div class='person'>";
@@ -47,7 +56,7 @@
     <section>
         <h2>Produtos</h2>
         <?php
-        // Listar Produtos
+
         $produto = new Produto($db);
         $stmtProdutos = $produto->lerTodos();
 
@@ -56,7 +65,6 @@
                 echo "<div class='product'>";
                 echo "<p><strong>ID:</strong> " . $linha['id'] . "</p>";
                 echo "<p><strong>Nome:</strong> " . $linha['nome'] . "</p>";
-                echo "<p><strong>Descrição:</strong> " . $linha['descricao'] . "</p>";
                 echo "<p><strong>Preço:</strong> R$ " . number_format($linha['preco'], 2, ',', '.') . "</p>";
                 echo "<p><a href='editar.php?tipo=produto&id=" . $linha['id'] . "'>Editar Produto</a></p>";
                 echo "</div>";
