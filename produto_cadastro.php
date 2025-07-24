@@ -19,10 +19,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 
-<h2>Cadastrar Produto</h2>
-<form method="POST">
-    Nome: <input type="text" name="nome" required><br>
-    Descrição: <input type="text" name="descricao" required><br>
-    Preço: <input type="number" name="preco" step="0.01" required><br>
-    <input type="submit" value="Cadastrar">
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastrar Produto</title>
+    <link rel="stylesheet" href="style.css">
+    <header>
+        <h1>Cadastro</h1>
+    </header>
+    <section>
+        <form method="POST">
+            <label for="nome">Nome:<input type="text" name="nome" required><br></label><br>
+            <label for="preco">Preço:<input type="number" name="preco" step="0.01" required><br>
+            <input type="submit" value="Cadastrar">
+    
+        </form>
+
 </form>
