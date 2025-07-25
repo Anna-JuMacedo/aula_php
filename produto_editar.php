@@ -2,13 +2,10 @@
 require_once 'conexao.php';
 require_once 'produto.php';
 
-if ($conexao) 
-if (!isset($_GET['id'])) {
-    die("<p class='error'>Erro: Produto não especificado.</p>");
-}
-
+$banco = new BancoDeDados();
+$db = $banco->obterConexao();
 $id = $_GET['id'];
-$produto = new Produto($conexao);
+$produto = new Produto($db);
 $dados = $produto->buscarPorId($id);
 
 if (!$dados) {

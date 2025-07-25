@@ -2,17 +2,18 @@
 require_once 'conexao.php';
 require_once 'pessoa.php';
 
-if ($conexao) {
+$banco = new BancoDeDados();
+$db = $banco->obterConexao();
 $id = $_GET['id'];
 $pessoa = new Pessoa($db);
 $dados = $pessoa->buscarPorId($id);
-}
+
 
 if (!$dados) {
     die("<p class='error'>Pessoa não encontrada.</p>");
 }
 
-// Se o formulário for enviado
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pessoa->id = $id;
     $pessoa->nome = $_POST['nome'];

@@ -1,23 +1,10 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Pessoas e Produtos</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <h1>Lista de Pessoas e Produtos Cadastrados</h1>
-    </header>
-
-    <section>
-        <h2>Pessoas</h2>
-        <?php
+<?php
        require_once 'conexao.php';
+       require_once 'pessoa.php';
+       require_once 'produto.php';
 
-       
-       if ($conexao){
+       $banco = new BancoDeDados();
+       $db = $banco->obterConexao();
            try {
                $sql = "SELECT * FROM pessoas";
                $stmtPessoas = $con->query($sql);
@@ -33,10 +20,7 @@
            } catch (PDOException $e) {
                echo "<p class='error'>Erro ao executar a consulta: " . $e->getMessage() . "</p>";
            }
-       } else {
-           echo "<p class='error'>Erro ao conectar ao banco de dados.</p>";
-       }
-
+           
         $pessoas = new Pessoa($db);
         if ($stmtPessoas->rowCount() > 0) {
             while ($linha = $stmtPessoas->fetch(PDO::FETCH_ASSOC)) {
@@ -73,6 +57,23 @@
             echo "<p class='error'>Nenhum produto encontrado.</p>";
         }
         ?>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Pessoas e Produtos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Lista de Pessoas e Produtos Cadastrados</h1>
+    </header>
+
+    <section>
+        <h2>Pessoas</h2>
+
     </section>
 </body>
 </html>

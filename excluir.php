@@ -1,6 +1,9 @@
 <?php
+require_once 'conexao.php';
+require_once 'pessoa.php';
+require_once 'produto.php';
 
-public function excluir() {
+    public function excluir(){
     $query = "DELETE FROM " . $this->nome_tabela . "WHERE id = :id";
     $stmt = $this->conexao->prepare($query);
 

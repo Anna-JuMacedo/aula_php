@@ -1,6 +1,5 @@
 <?php
-require 'conexao.php';
-require 'pessoa.php';
+require_once 'conexao.php';
 
 class Pessoa {
     private $conexao;

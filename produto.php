@@ -1,12 +1,13 @@
 <?php
 
+require_once 'conexao.php';
+
 class Produto {
     private $conexao;
     private $tabela = "produtos";
 
     public $id;
     public $nome;
-    public $descricao;
     public $preco;
 
     public function __construct($db) {
@@ -14,11 +15,10 @@ class Produto {
     }
 
     public function criar() {
-        $sql = "INSERT INTO {$this->tabela} (nome, descricao, preco) VALUES (:nome, :descricao, :preco)";
+        $sql = "INSERT INTO {$this->tabela} (nome, preco) VALUES (:nome, :preco)";
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bindParam(":nome", $this->nome);
-        $stmt->bindParam(":descricao", $this->descricao);
-        $stmt->bindParam(":preco", $this->preco);
+        $stmt->bindParam(':nome', $this->nome);
+        $stmt->bindParam(':preco', $this->preco);
         return $stmt->execute();
     }
 
@@ -38,10 +38,9 @@ class Produto {
     }
 
     public function editar() {
-        $sql = "UPDATE {$this->tabela} SET nome = :nome, descricao = :descricao, preco = :preco WHERE id = :id";
+        $sql = "UPDATE {$this->tabela} SET nome = :nome, preco = :preco WHERE id = :id";
         $stmt = $this->conexao->prepare($sql);
         $stmt->bindParam(":nome", $this->nome);
-        $stmt->bindParam(":descricao", $this->descricao);
         $stmt->bindParam(":preco", $this->preco);
         $stmt->bindParam(":id", $this->id);
         return $stmt->execute();

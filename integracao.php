@@ -2,10 +2,10 @@
 require_once 'conexao.php';
 require_once 'pessoa.php';
 
-$mensagem = "";
-$cadastroSucesso = false;
+$banco = new BancoDeDados();
+$db = $banco->obterConexao();
 
-if ($conexao) {
+
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $pessoa = new Pessoa($conexao);
         $pessoa->nome = $_POST['nome'];
@@ -21,9 +21,7 @@ if ($conexao) {
 
     $sql = "SELECT * FROM pessoas";
     $resultado = $conexao->query($sql);
-} else {
-    $mensagem = "Não foi possível conectar ao banco de dados.";
-}
+ 
 ?>
 
 <!DOCTYPE html>
